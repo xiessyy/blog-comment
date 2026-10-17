@@ -69,10 +69,11 @@ function md(s) {
 }
 
 function fmtTime(ms) {
-  var d = new Date(ms);
+  /* Cloudflare Worker 运行在 UTC，这里手动偏移到 Asia/Shanghai (UTC+8) */
+  var d = new Date(ms + 8 * 3600 * 1000);
   function p(n) { return n < 10 ? "0" + n : "" + n; }
-  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) +
-    " " + p(d.getHours()) + ":" + p(d.getMinutes());
+  return d.getUTCFullYear() + "-" + p(d.getUTCMonth() + 1) + "-" + p(d.getUTCDate()) +
+    " " + p(d.getUTCHours()) + ":" + p(d.getUTCMinutes());
 }
 
 /* 取 IP */
